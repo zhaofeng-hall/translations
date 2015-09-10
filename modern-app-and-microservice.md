@@ -226,33 +226,54 @@ The scope of a Microservice goes beyond the public facing API’s. A Microservic
 
 A benefit of Microservices is that they provide the flexibility to scale individual components based on performance profiles exhibited at runtime. They can also be composed to deliver just the right set of functionality for new user experiences that target current and emerging form factors. 
 
-clip_image006 
+微服务的一大优点就是能够根据单个组件在运行时阶段的性能表现提供弹性扩展。它们也能组合起来，针对现有及新兴的组合因素，交付一套适用于新的用户体验的功能。
+
+![](http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/01/clip_image006_thumb.jpg)
 
 Today’s cloud platforms such as AWS and Azure provide Virtual Machine based mechanisms for deploying Microservices. Each cloud platform vendor will provide various tools; API’s and patterns for defining virtual machine configurations. For sake of this discussion, we will use Microsoft Azure as the cloud platform and assume our Microservices were developed using ASP.NET Web API. The Microservices will be deployed in the same manner one would deploy a web site.
 
+当前，诸如 AWS 和 Azure 这样的云平台根据微服务的部署机制，提供虚拟机。每个云平台厂商将会提供各种各样的工具、 API 以及用于明确虚拟机配置的各种范式。为了便于讨论，我们以微软的 Azure 云平台为例，假定我们的微服务使用 ASP.NET Web API 开发。我们将以与部署网站相同的方法部署微服务。
+
 Azure provides the ability to define Resource Groups and deploy web sites (Microservices) into these Resource Groups. All the web sites in a resource group will share the resources assigned that Resource Group. Azure then lets you define Web Hosting Plans. Each Web Hosting Plan is associated with a Resource Group and defines the size of the virtual machines, the metric that will be used for elasticity, the number of instances currently running, and the maximum number to scale to when the scale metric has triggered the need for a new instance.
 
-clip_image008
+Azure 提供了定义 Resource Group（源码集合）的功能，把网站（微服务）部署在这些源码集合中。同一个源码集合中的所有网站都共享由源码集合指定的源代码。接下来 Azure 允许用户选择 Web Hosting Plans（网页托管计划）。每个网页托管计划与一个源码集合关联，定义虚拟机的大小、弹性度量标准、当前运行的实例数量，以及实例的最大扩展数量（扩展标准会触发新实例）。
+
+![](http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/01/clip_image008_thumb.png)
 
 Using this model, we could choose to configure our Microservices as follows:
+
+借助此模型，我们能够对微服务进行如下配置：
+
+- 部署在源码集合 A 中的 Reference Data and Customer 微服务使用网页托管计划 A ，因此也就运行相同的虚拟机实例
+- 订单微服务部署在源码集合 B 中，使用网页托管计划 B ，指定最小4个虚拟机的集群
+
 
 - Reference Data and Customer Microservices deployed to the Resource Group A using Web Hosting Plan A therefore running on the same VM instance
 - Order Microservice are deployed to Resource Group B using Web Hosting Plan B which defines a minimum 4 VM farm
 
-clip_image010
+![](http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/01/clip_image010_thumb.jpg)
 
 Another way we could go is to deploy each Microservice independently. Each Microservice is deployed into its own Resource Group each with their own Web Hosting Plan, sized appropriately for the amount of load expected and scaled according to the metric defined in the Web Hosting Plan.
 
-clip_image012
+另一种可以使用的方法是独立部署每个微服务。每个微服务都部署到自己的源码集合中，使用自己的网页托管计划，体积符合预期的负载量，也能根据网页托管计划中的维度进行扩展。
+
+![](http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/01/clip_image012_thumb.jpg)
 
 The key point here is that cloud platforms provide great flexibility in how each Microservice is deployed and scaled. Designing load testing scenarios that emulate real world usage of the overall system will inform your initial deployment configurations. Leveraging real-time monitoring and analytics over time will provide the necessary data to tweak the deployment configurations for optimal efficiency.
 
+这里的关键就是，云平台基于每个微服务的部署和扩展情况提供高度灵活性。设计负载测试场景，能与实际的整体系统用量相匹敌，能够告知用户初始的部署配置。对实时监控和分析的提升能够提供必要的数据，从而促使部署配置达到最优效能。
+
 There is an emerging product called Docker that provides an even more granular approach to deploying Microservices. Docker is an open-source project that provides the ability to easily create lightweight, portable, self-sufficient containers for any application. The same container that a developer builds and tests on a laptop can run at scale, in production, on VMs, bare metal, OpenStack clusters and public clouds. This feature is available today in Azure and AWS with support for Linux based applications. Windows Container support is coming in early 2015. Using a container approach, one could deploy multiple Microservice containers to individual VM’s to maximize utilization of each VM, helping to provide very flexible cost containment.
 
-clip_image014
+新兴的 Docker 提供了颗粒度更高的微服务部署方法。 Docker 是一项开源项目，能够轻松为各种应用创建轻量、可移植、自足的容器。开发者在电脑上创建并测试过的容器能够在生产环境、虚拟机、裸机、OpenStack 集群和公有云等不同环境中大规模运行。目前 Azure 和 AWS 已经对基于 Linux 的应用提供此功能。对应 Windows 容器支持也在 2015 年初提供。通过使用容器解决方案，可以给单个虚拟机部署多个微服务容器，从而最大化发挥每个虚拟机的能力，实现更加灵活的控制。
+
+![](http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/01/clip_image014_thumb.jpg)
 
 ## SUMMARY
 
+## 结语
+
 Modern Applications are designed, architected, and developed using modern frameworks, patterns, practices and methodologies. They are beautiful in their user experience, are built on a foundation of scalable, resilient services. Microservice Architecture is an approach to delivering highly scalable, cross platform RESTful API’s that can be developed, deployed and scaled independently of one another to provide the Modern Application product team the greatest amount of flexibility and control.
 
-BlueMetal recommends Lean Engineering, Responsive Design, and Microservice Architecture along with Cloud Platforms to deliver Modern Applications at high velocity. If you are interested in learning more about Microservices and how they can be applied to your next development project, please contact me at bobf@bluemetal.com or reach out to the Sales Directors in your area.
+现代应用采用现代化的框架、范式、实践和方法论进行设计、架构和开发。在用户体验方面非常优雅，建立在可扩展、弹性服务的基础之上。微服务架构是交付高度扩展、跨平台的 RESTful API 的一种方法。这些 API 能够被独立开发、部署和扩展，为现代应用产品提供了最大化点灵活性和控制。
+
